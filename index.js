@@ -1,8 +1,16 @@
+const path = require("path");
+
 const Hapi = require("hapi");
+const Inert = require("inert");
 
 const server = Hapi.server({
   port: 3000,
-  host: "localhost"
+  host: "localhost",
+  routes: {
+    files: {
+      relativeTo: path.join(__dirname, "public")
+    }
+  }
 });
 
 const consoleLogging = {
@@ -26,15 +34,17 @@ const consoleLogging = {
 };
 
 const start = async () => {
-  await server.register([consoleLogging]);
+  await server.register([Inert.plugin, consoleLogging]);
   await server.start();
+
+  console.log("Server running at:", server.info.uri);
 };
 
 server.route({
   path: "/",
   method: "GET",
   handler: (request, h) => {
-    return "Hello, hapi!";
+    return h.file("index.html");
   }
 });
 

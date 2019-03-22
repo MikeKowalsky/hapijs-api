@@ -5,11 +5,30 @@ const server = Hapi.server({
   host: "localhost"
 });
 
-const start = async () => {
-  await server.start();
+const consoleLogging = {
+  plugin: require("good"),
+  options: {
+    ops: {
+      interval: 1000
+    },
+    reporters: {
+      consoleReporter: [
+        {
+          module: "good-squeeze",
+          name: "Squeeze",
+          args: [{ response: "*", log: "*" }]
+        },
+        { module: "good-console" },
+        "stdout"
+      ]
+    }
+  }
 };
 
-start();
+const start = async () => {
+  await server.register([consoleLogging]);
+  await server.start();
+};
 
 server.route({
   path: "/",
@@ -18,3 +37,13 @@ server.route({
     return "Hello, hapi!";
   }
 });
+
+server.route({
+  path: "/{id}",
+  method: "GET",
+  handler: (request, h) => {
+    return `Product ID: ${encodeURIComponent(request.params.id)}`;
+  }
+});
+
+start();

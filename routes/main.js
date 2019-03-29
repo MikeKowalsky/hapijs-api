@@ -5,7 +5,7 @@ module.exports = {
       {
         method: "GET",
         path: "/api/hello",
-        handler: async (request, h) => {
+        handler: (request, h) => {
           const response = h.response(
             `<html>
               <head>
@@ -25,6 +25,17 @@ module.exports = {
         method: "GET",
         handler: (request, h) => {
           return h.file("index.html");
+        }
+      },
+      {
+        path: "/handlebar",
+        method: "GET",
+        handler: (request, h) => {
+          return h.view("index", {
+            title: "Handlebar test",
+            tasks: [{ task: "One" }, { task: "Two" }, { task: "Three" }],
+            show: true
+          });
         }
       },
       {

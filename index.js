@@ -2,6 +2,8 @@ const path = require("path");
 
 const Hapi = require("hapi");
 const Inert = require("inert");
+const Vision = require("vision");
+const Handlebars = require("handlebars");
 
 const ApiPlugin = require("./routes/main");
 
@@ -36,7 +38,14 @@ const consoleLogging = {
 };
 
 const bootUpServer = async () => {
-  await server.register([Inert.plugin, consoleLogging, ApiPlugin]);
+  await server.register([Inert.plugin, consoleLogging, ApiPlugin, Vision]);
+
+  server.views({
+    engines: { html: Handlebars },
+    relativeTo: __dirname,
+    path: "views"
+  });
+
   await server.start();
 
   console.log(`Server is running at ${server.info.uri}`);

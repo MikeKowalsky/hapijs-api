@@ -15,12 +15,12 @@ const MONGODB_URI = `mongodb+srv://${keys.MONGO_USER}:${
 
 const server = Hapi.server({
   port: 3000,
-  host: "localhost",
-  routes: {
-    files: {
-      relativeTo: path.join(__dirname, "public")
-    }
-  }
+  host: "localhost"
+  // routes: {
+  //   files: {
+  //     relativeTo: path.join(__dirname, "public")
+  //   }
+  // }
 });
 
 const consoleLogging = {

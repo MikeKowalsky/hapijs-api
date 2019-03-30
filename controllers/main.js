@@ -1,17 +1,19 @@
 const Todo = require("../models/todo");
 
-exports.getIndex = (request, h) => h.file("index.html");
+exports.getIndex = (request, h) => {
+  return h.view("index", {
+    title: "Todo"
+  });
+};
 
 //curl http://localhost:3000/todos
 exports.getTodos = async (request, h) => {
   try {
     const tasks = await Todo.find();
-    console.log(tasks);
 
-    return h.view("index", {
+    return h.view("todos", {
       title: "Todos",
-      tasks,
-      show: true
+      tasks
     });
   } catch (err) {
     throw err;
@@ -29,6 +31,9 @@ exports.addTodo = async (request, h) => {
     throw err;
   }
 
-  h.response("created").code(201);
-  return newTodo;
+  // h.response("created")
+  //   .code(201);
+  // return newTodo;
+
+  return h.redirect().location("todos");
 };

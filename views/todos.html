@@ -7,12 +7,23 @@
     <title>{{ title }}</title>
   </head>
   <body>
-    <h1>Yet another to-do-list</h1>
+    <h1>List</h1>
 
     <ul>
+      {{#each tasks}}
       <li>
-        <a href="/todos">go-to-list</a>
+        <p>{{ task }}</p>
       </li>
+      {{/each}}
     </ul>
+
+    <hr />
+
+    <form action="/todos" method="POST">
+      <h3>Add a new to-do</h3>
+      <label for="newTask">New Task:</label>
+      <input type="text" name="task" id="newTask" />
+      <button type="submit">Add</button>
+    </form>
   </body>
 </html>

@@ -4,8 +4,14 @@ const Hapi = require("hapi");
 const Inert = require("inert");
 const Vision = require("vision");
 const Handlebars = require("handlebars");
+const mongoose = require("mongoose");
 
 const ApiPlugin = require("./routes/main");
+
+const keys = require("./utils/keys");
+const MONGODB_URI = `mongodb+srv://${keys.MONGO_USER}:${
+  keys.MONGO_PASSWORD
+}@cluster0-idsge.mongodb.net/hapi-playground?retryWrites=true`;
 
 const server = Hapi.server({
   port: 3000,
@@ -56,26 +62,10 @@ process.on("unhandledRejection", err => {
   process.exit(1);
 });
 
-// server.route({
-//   path: "/",
-//   method: "GET",
-//   handler: (request, h) => {
-//     return h.file("index.html");
-//   }
-// });
-
-// server.route({
-//   path: "/{id}",
-//   method: "GET",
-//   handler: (request, h) => {
-//     return `Product ID: ${encodeURIComponent(request.params.id)}`;
-//   }
-//   // handler: {
-//   //   directory: {
-//   //     path: Path.join(__dirname, "public"),
-//   //     listing: true
-//   //   }
-//   // }
-// });
-
-bootUpServer();
+mongoose
+  .connect(MONGODB_URI, { useNewUrlParser: true })
+  .then(connected => {
+    console.log("***** MongoDB connected *****");
+    bootUpServer();
+  })
+  .catch(err => console.log(err));

@@ -1,3 +1,5 @@
+const mainController = require("../controllers/main");
+
 module.exports = {
   name: "ApiPlugin",
   register: async (server, options) => {
@@ -23,20 +25,17 @@ module.exports = {
       {
         path: "/",
         method: "GET",
-        handler: (request, h) => {
-          return h.file("index.html");
-        }
+        handler: mainController.getIndex
       },
       {
-        path: "/handlebar",
+        path: "/todos",
         method: "GET",
-        handler: (request, h) => {
-          return h.view("index", {
-            title: "Handlebar test",
-            tasks: [{ task: "One" }, { task: "Two" }, { task: "Three" }],
-            show: true
-          });
-        }
+        handler: mainController.getTodos
+      },
+      {
+        path: "/todos",
+        method: "POST",
+        handler: mainController.addTodo
       },
       {
         path: "/{id}",
@@ -44,17 +43,7 @@ module.exports = {
         handler: (request, h) => {
           return `Product ID: ${encodeURIComponent(request.params.id)}`;
         }
-        // handler: {
-        //   directory: {
-        //     path: Path.join(__dirname, "public"),
-        //     listing: true
-        //   }
-        // }
       }
     ]);
-
-    // server.route();
-
-    // server.route();
   }
 };

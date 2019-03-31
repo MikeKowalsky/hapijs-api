@@ -2,8 +2,20 @@ const Todo = require("../models/todo");
 
 exports.getIndex = (request, h) => {
   return h.view("index", {
-    title: "Todo"
+    title: "Todo List"
   });
+};
+
+exports.getScripts = {
+  directory: {
+    path: "public/scripts"
+  }
+};
+
+exports.getStyles = {
+  directory: {
+    path: "public/styles"
+  }
 };
 
 //curl http://localhost:3000/todos

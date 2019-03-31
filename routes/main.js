@@ -10,6 +10,16 @@ module.exports = {
         handler: mainController.getIndex
       },
       {
+        path: "/scripts/{file*}",
+        method: "GET",
+        handler: mainController.getScripts
+      },
+      {
+        path: "/styles/{file*}",
+        method: "GET",
+        handler: mainController.getStyles
+      },
+      {
         path: "/todos",
         method: "GET",
         handler: mainController.getTodos

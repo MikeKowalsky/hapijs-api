@@ -1,4 +1,4 @@
-const path = require("path");
+const Path = require("path");
 
 const Hapi = require("hapi");
 const Inert = require("inert");
@@ -16,11 +16,6 @@ const MONGODB_URI = `mongodb+srv://${keys.MONGO_USER}:${
 const server = Hapi.server({
   port: 3000,
   host: "localhost"
-  // routes: {
-  //   files: {
-  //     relativeTo: path.join(__dirname, "public")
-  //   }
-  // }
 });
 
 const consoleLogging = {
@@ -48,8 +43,10 @@ const bootUpServer = async () => {
 
   server.views({
     engines: { html: Handlebars },
-    relativeTo: __dirname,
-    path: "views"
+    relativeTo: Path.resolve(__dirname, "public"),
+    path: "views",
+    layoutPath: Path.resolve(__dirname, "public", "layouts"),
+    layout: "layout"
   });
 
   await server.start();

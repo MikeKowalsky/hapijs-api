@@ -1,0 +1,18 @@
+<h1>List</h1>
+
+<ul>
+  {{#each tasks}}
+  <li>
+    <p>{{ task }}</p>
+  </li>
+  {{/each}}
+</ul>
+
+<hr />
+
+<form action="/todos" method="POST">
+  <h3>Add a new to-do</h3>
+  <label for="newTask">New Task:</label>
+  <input type="text" name="task" id="newTask" />
+  <button type="submit">Add</button>
+</form>

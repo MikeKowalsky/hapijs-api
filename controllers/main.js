@@ -2,7 +2,8 @@ const Todo = require("../models/todo");
 
 exports.getIndex = (request, h) => {
   return h.view("index", {
-    title: "Todo List"
+    title: "Todo List",
+    styles: true
   });
 };
 
